@@ -7,7 +7,7 @@ class HelpCommand(commands.Cog):
 
     @commands.command(name="help")
     async def help_command(self, ctx):
-        prefix = ctx.prefix  # Dynamic prefix (e.g., V!)
+        prefix = ctx.prefix
 
         embed = discord.Embed(
             title="🛠️ VibeCraft Help Menu",
