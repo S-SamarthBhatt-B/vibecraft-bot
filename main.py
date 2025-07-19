@@ -21,7 +21,7 @@ intents.message_content = True
 intents.members = True
 intents.guilds = True
 # Create bot instance
-bot = commands.Bot(command_prefix=config.PREFIX, intents=intents)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(*config.PREFIXES), intents=intents)
 
 # Remove default help command
 bot.remove_command("help")
