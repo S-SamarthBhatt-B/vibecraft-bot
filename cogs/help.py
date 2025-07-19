@@ -5,28 +5,40 @@ class HelpCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="help", help="Show all available commands.")
-    async def help(self, ctx):
+    @commands.command(name="help")
+    async def help_command(self, ctx):
+        prefix = ctx.prefix  # Dynamic prefix (e.g., V!)
+
         embed = discord.Embed(
             title="🛠️ VibeCraft Help Menu",
             description="Here's a list of all my commands, organized by category:",
-            color=discord.Color.from_str("#8E44AD")  # VibeCraft Purple
+            color=discord.Color.blue()
         )
-
         embed.set_thumbnail(url=self.bot.user.avatar.url if self.bot.user.avatar else None)
 
-        for cog_name, cog in self.bot.cogs.items():
-            commands_list = cog.get_commands()
-            filtered_commands = [cmd for cmd in commands_list if not cmd.hidden]
+        # Group commands by cog (category)
+        categories = {}
+        for command in self.bot.commands:
+            if command.hidden:
+                continue  # Skip hidden commands
 
-            if filtered_commands:
-                value = ""
-                for command in filtered_commands:
-                    aliases = f" (aliases: {', '.join(command.aliases)})" if command.aliases else ""
-                    value += f"• `!{command.name}`{aliases} – {command.help or 'No description'}\n"
-                embed.add_field(name=f"📂 {cog_name}", value=value, inline=False)
+            category = command.cog_name or "Other"
+            if category not in categories:
+                categories[category] = []
+            
+            aliases = f" (aliases: {', '.join(command.aliases)})" if command.aliases else ""
+            description = command.help or "No description"
+            formatted = f"`{prefix}{command.name}`{aliases} – {description}"
+            categories[category].append(formatted)
 
-        embed.set_footer(text="Use the commands with the given prefix: !")
+        for category, cmds in categories.items():
+            embed.add_field(
+                name=f"📂 {category}",
+                value="\n".join(cmds),
+                inline=False
+            )
+
+        embed.set_footer(text=f"Use the commands with the given prefix: {prefix}")
         await ctx.send(embed=embed)
 
 async def setup(bot):
