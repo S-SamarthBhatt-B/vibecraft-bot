@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VibeCraft Bot Panel</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <nav class="navbar">
+      <h1 class="logo">🎵 VibeCraft Bot</h1>
+      <div class="nav-links">
+        {% if user %}
+          <div class="user-info">
+            <img src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}.png?size=64" alt="Avatar">
+            <span>{{ user.username }}</span>
+            <a href="/dashboard" class="btn">Dashboard</a>
+            <a href="/logout" class="btn logout">Logout</a>
+          </div>
+        {% else %}
+          <a href="/login" class="btn">Login with Discord</a>
+        {% endif %}
+      </div>
+    </nav>
+
+    <main>
+      <h2>Welcome to the VibeCraft Bot Control Panel</h2>
+      <p>Manage your servers, configure bot settings, and explore powerful moderation tools.</p>
+    </main>
+
+    <footer>
+      <p>
+        <a href="/terms">Terms of Service</a> | 
+        <a href="/privacy">Privacy Policy</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

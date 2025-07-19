@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard – VibeCraft</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <nav class="navbar">
+      <h1 class="logo">🎛️ Dashboard</h1>
+      <div class="nav-links">
+        <div class="user-info">
+          <img src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}.png?size=64" alt="Avatar">
+          <span>{{ user.username }}</span>
+          <a href="/" class="btn">Home</a>
+          <a href="/logout" class="btn logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <h2>Servers You Manage with VibeCraft</h2>
+      <div class="server-list">
+        {% for guild in guilds %}
+          <div class="server-card">
+            <img src="https://cdn.discordapp.com/icons/{{ guild.id }}/{{ guild.icon }}.png?size=64" onerror="this.src='/static/default-server.png'" alt="Server Icon">
+            <div>
+              <h3>{{ guild.name }}</h3>
+              <p>ID: {{ guild.id }}</p>
+            </div>
+          </div>
+        {% else %}
+          <p>No mutual servers found.</p>
+        {% endfor %}
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        <a href="/terms">Terms of Service</a> | 
+        <a href="/privacy">Privacy Policy</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
