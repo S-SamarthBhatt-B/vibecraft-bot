@@ -7,27 +7,29 @@ from dotenv import load_dotenv
 from datetime import datetime, UTC
 import config
 
-# Load .env file (contains TOKEN)
+# Load environment variables
 load_dotenv()
 
-# Get token from environment
+# Get token
 TOKEN = os.getenv("TOKEN")
-
-# ✅ Check if token is found
 if not TOKEN:
     raise ValueError("❌ Bot token not found in .env. Make sure you have TOKEN=...")
 
-# Enable required Discord intents
+# Enable intents
 intents = discord.Intents.default()
 intents.message_content = True
-intents.members = True  # For userinfo/serverinfo
+intents.members = True  # Required for server info, user info, moderation
 
-# Set up bot
+# Create bot instance
 bot = commands.Bot(command_prefix=config.PREFIX, intents=intents)
-bot.remove_command("help")  # Remove default help command
+
+# Remove default help command (for custom one)
+bot.remove_command("help")
+
+# Track bot start time
 bot.start_time = datetime.now(UTC)
 
-# List of cogs (feature modules) to load
+# List of all cog modules to load
 initial_extensions = [
     'cogs.general',
     'cogs.info',
@@ -42,19 +44,19 @@ initial_extensions = [
     'cogs.slash_moderation',
 ]
 
-# Event: When bot is ready
+# When bot is ready
 @bot.event
 async def on_ready():
     print(f"✅ {bot.user} is online!")
 
-    # Sync slash commands
+    # Sync slash commands globally
     try:
         synced = await bot.tree.sync()
         print(f"✅ Synced {len(synced)} slash command(s)")
     except Exception as e:
         print(f"❌ Failed to sync slash commands: {e}")
 
-    # Save bot's current guild IDs to a JSON file
+    # Save list of server IDs the bot is in
     try:
         guild_ids = [str(g.id) for g in bot.guilds]
         with open("bot_guilds.json", "w") as f:
@@ -63,7 +65,7 @@ async def on_ready():
     except Exception as e:
         print(f"❌ Failed to save bot guilds: {e}")
 
-# Load all cogs
+# Load all extensions/cogs
 async def load_extensions():
     for ext in initial_extensions:
         try:
@@ -72,10 +74,9 @@ async def load_extensions():
         except Exception as e:
             print(f"❌ Failed to load extension {ext}: {e}")
 
-# Run everything
+# Run the bot
 async def main():
     await load_extensions()
     await bot.start(TOKEN)
 
-# Start the bot
 asyncio.run(main())
