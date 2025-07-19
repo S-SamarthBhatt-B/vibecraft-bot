@@ -59,12 +59,12 @@ class Info(commands.Cog):
 
         embed.add_field(
             name="🔗 GitHub",
-            value="[View Source](https://github.com/S-SamarthBhatt-B/VibeCraftBot)",  # Update this
+            value="[View Source](https://github.com/S-SamarthBhatt-B/vibecraft-bot)",  # Update this
             inline=False
         )
         embed.add_field(
             name="📢 Invite Me",
-            value="[Click here](https://discord.com/oauth2/authorize?client_id=1394527557193564210&permissions=8&integration_type=0&scope=applications.commands+bot) to invite me!",  # Update this
+            value="[Click here](https://discord.com/oauth2/authorize?client_id=1394527557193564210) to invite me!",  # Update this
             inline=False
         )
 
