@@ -53,12 +53,12 @@ class SlashInfo(commands.Cog):
 
         embed.add_field(
             name="🔗 GitHub",
-            value="[View Source](https://github.com/yourusername/vibecraft-bot)",  # update if needed
+            value="[View Source](https://github.com/S-SamarthBhatt-B/VibeCraft-Bot)",  # update if needed
             inline=False
         )
         embed.add_field(
             name="📢 Invite Me",
-            value="[Invite Link](https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8)",  # update your bot's ID
+            value="[Invite Link](https://discord.com/oauth2/authorize?client_id=1394527557193564210)",  # update your bot's ID
             inline=False
         )
 
