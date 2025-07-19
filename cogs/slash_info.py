@@ -27,8 +27,11 @@ class SlashInfo(commands.Cog):
         mem_usage = round(process.memory_info().rss / 1024 / 1024, 2)  # MB
         cpu_percent = process.cpu_percent(interval=0.5)
 
-        # ✅ Detect actual prefix
-        prefix = config.PREFIXES[0] if isinstance(config.PREFIXES, list) else config.PREFIX
+        prefix = (
+            config.PREFIXES[0] if hasattr(config, "PREFIXES")
+            else config.PREFIX if hasattr(config, "PREFIX")
+            else "!"
+        )
 
         embed = discord.Embed(
             title="🤖 VibeCraft Bot Info",
@@ -50,17 +53,18 @@ class SlashInfo(commands.Cog):
 
         embed.add_field(
             name="🔗 GitHub",
-            value="[View Source](https://github.com/S-SamarthBhatt-B/VibeCraft-Bot)",  # 🔁 Update this
+            value="[View Source](https://github.com/yourusername/vibecraft-bot)",  # update if needed
             inline=False
         )
         embed.add_field(
             name="📢 Invite Me",
-            value="[Invite Link](https://discord.com/oauth2/authorize?client_id=1394527557193564210)",  # 🔁 Update this
+            value="[Invite Link](https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8)",  # update your bot's ID
             inline=False
         )
 
-        embed.set_footer(text="Thanks for using VibeCraft ❤️ | Use /help for all commands")
+        embed.set_footer(text="Thanks for using VibeCraft ❤️ | Use /help or V!help for more commands")
         await interaction.response.send_message(embed=embed)
 
+# Setup
 async def setup(bot):
     await bot.add_cog(SlashInfo(bot))
