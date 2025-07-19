@@ -5,6 +5,7 @@ import datetime
 import platform
 import psutil
 import os
+import config
 
 class SlashInfo(commands.Cog):
     def __init__(self, bot):
@@ -26,6 +27,9 @@ class SlashInfo(commands.Cog):
         mem_usage = round(process.memory_info().rss / 1024 / 1024, 2)  # MB
         cpu_percent = process.cpu_percent(interval=0.5)
 
+        # ✅ Detect actual prefix
+        prefix = config.PREFIXES[0] if isinstance(config.PREFIXES, list) else config.PREFIX
+
         embed = discord.Embed(
             title="🤖 VibeCraft Bot Info",
             description="Your all-in-one assistant for the VibeCraft community!",
@@ -38,7 +42,7 @@ class SlashInfo(commands.Cog):
         embed.add_field(name="📊 Servers", value=str(total_guilds), inline=True)
         embed.add_field(name="👥 Users", value=str(total_users), inline=True)
         embed.add_field(name="📦 Modules Loaded", value=str(total_cogs), inline=True)
-        embed.add_field(name="⚙️ Prefix", value=f"`{self.bot.command_prefix}`", inline=True)
+        embed.add_field(name="⚙️ Prefix", value=f"`{prefix}`", inline=True)
         embed.add_field(name="🧠 Library", value=f"discord.py `{discord.__version__}`", inline=True)
         embed.add_field(name="🐍 Python", value=platform.python_version(), inline=True)
         embed.add_field(name="💾 Memory Usage", value=f"{mem_usage} MB", inline=True)
@@ -46,12 +50,12 @@ class SlashInfo(commands.Cog):
 
         embed.add_field(
             name="🔗 GitHub",
-            value="[View Source](https://github.com/yourusername/vibecraft-bot)",  # update if needed
+            value="[View Source](https://github.com/S-SamarthBhatt-B/VibeCraft-Bot)",  # 🔁 Update this
             inline=False
         )
         embed.add_field(
             name="📢 Invite Me",
-            value="[Invite Link](https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8)",
+            value="[Invite Link](https://discord.com/oauth2/authorize?client_id=1394527557193564210)",  # 🔁 Update this
             inline=False
         )
 
