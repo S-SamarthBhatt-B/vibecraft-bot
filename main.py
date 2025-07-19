@@ -19,8 +19,7 @@ if not TOKEN:
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
-intents.guilds = True  # ✅ Required for slash commands + dashboard mutual guilds
-
+intents.guilds = True
 # Create bot instance
 bot = commands.Bot(command_prefix=config.PREFIX, intents=intents)
 
