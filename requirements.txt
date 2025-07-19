@@ -1,6 +1,11 @@
+# Discord Bot
 discord.py
-python-dotenv
 psutil
+
+# Flask Web Panel
 Flask
+python-dotenv
 requests
+
+# For Replit and production environments
 gunicorn
