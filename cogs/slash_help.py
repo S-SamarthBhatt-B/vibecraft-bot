@@ -9,22 +9,23 @@ class SlashHelp(commands.Cog):
 
     @app_commands.command(name="help", description="Show all commands and their uses")
     async def help(self, interaction: discord.Interaction):
-        prefix = config.PREFIX  # should be "V!"
+        # Support multiple prefixes if needed
+        prefix = config.PREFIXES[0] if isinstance(config.PREFIXES, list) else config.PREFIX
 
         embed = discord.Embed(
-            title="📖 VibeCraft Help",
-            description="Here's a list of available commands:\n\n",
+            title="📖 VibeCraft Help Menu",
+            description="Here's a list of available commands.\n\nUse either **slash commands** (e.g. `/ping`) or prefix commands (e.g. `V!ping`).",
             color=discord.Color.blurple()
         )
 
         embed.add_field(
             name="📂 General",
             value=(
-                f"{prefix}ping – Show bot latency\n"
-                f"{prefix}userinfo – Show user info\n"
-                f"{prefix}serverinfo – Show server info\n"
-                f"{prefix}avatar – Show user's avatar\n"
-                f"{prefix}uptime – Show bot uptime"
+                f"`{prefix}ping` / `/ping` – Show bot latency\n"
+                f"`{prefix}userinfo` / `/userinfo` – Show user info\n"
+                f"`{prefix}serverinfo` / `/serverinfo` – Show server info\n"
+                f"`{prefix}avatar` / `/avatar` – Show user's avatar\n"
+                f"`{prefix}uptime` / `/uptime` – Show bot uptime"
             ),
             inline=False
         )
@@ -32,18 +33,18 @@ class SlashHelp(commands.Cog):
         embed.add_field(
             name="📂 Moderation",
             value=(
-                f"{prefix}kick – Kick a user\n"
-                f"{prefix}ban – Ban a user\n"
-                f"{prefix}unban – Unban a user by ID\n"
-                f"{prefix}mute – Mute a user\n"
-                f"{prefix}unmute – Unmute a user\n"
-                f"{prefix}warn – Warn a user\n"
-                f"{prefix}warnings – Show user warnings\n"
-                f"{prefix}clearwarns – Clear user warnings\n"
-                f"{prefix}lock – Lock a channel\n"
-                f"{prefix}unlock – Unlock a channel\n"
-                f"{prefix}slowmode – Set channel slowmode\n"
-                f"{prefix}purge – Delete messages"
+                f"`{prefix}kick` / `/kick` – Kick a user\n"
+                f"`{prefix}ban` / `/ban` – Ban a user\n"
+                f"`{prefix}unban` / `/unban` – Unban a user by ID\n"
+                f"`{prefix}mute` / `/mute` – Mute a user\n"
+                f"`{prefix}unmute` / `/unmute` – Unmute a user\n"
+                f"`{prefix}warn` / `/warn` – Warn a user\n"
+                f"`{prefix}warnings` / `/warnings` – Show user warnings\n"
+                f"`{prefix}clearwarns` / `/clearwarns` – Clear warnings\n"
+                f"`{prefix}lock` / `/lock` – Lock channel\n"
+                f"`{prefix}unlock` / `/unlock` – Unlock channel\n"
+                f"`{prefix}slowmode` / `/slowmode` – Set slowmode\n"
+                f"`{prefix}purge` / `/purge` – Delete messages"
             ),
             inline=False
         )
@@ -51,13 +52,13 @@ class SlashHelp(commands.Cog):
         embed.add_field(
             name="📂 Info",
             value=(
-                f"{prefix}botinfo – Show bot info\n"
-                f"{prefix}help – Show this help menu"
+                f"`{prefix}botinfo` / `/botinfo` – Show bot info\n"
+                f"`{prefix}help` / `/help` – Show this help menu"
             ),
             inline=False
         )
 
-        embed.set_footer(text="Use slash commands too! Try /ping, /userinfo, etc.")
+        embed.set_footer(text="Made with ❤️ by VibeCraft | Try /help or V!help")
         await interaction.response.send_message(embed=embed)
 
 async def setup(bot):
