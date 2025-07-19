@@ -7,29 +7,33 @@ from dotenv import load_dotenv
 from datetime import datetime, UTC
 import config
 
-# Load environment variables
+# Load environment variables from .env
 load_dotenv()
 
-# Get token
+# Get bot token
 TOKEN = os.getenv("TOKEN")
 if not TOKEN:
-    raise ValueError("❌ Bot token not found in .env. Make sure you have TOKEN=...")
+    raise ValueError("❌ Bot token not found in .env file. Add TOKEN=...")
 
-# Enable intents
+# Setup Discord intents
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 intents.guilds = True
-# Create bot instance
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(*config.PREFIXES), intents=intents)
 
-# Remove default help command
+# Create bot instance with multiple prefixes
+bot = commands.Bot(
+    command_prefix=commands.when_mentioned_or(*config.PREFIXES),
+    intents=intents
+)
+
+# Remove the default help command so we can create our own
 bot.remove_command("help")
 
-# Track bot start time
+# Track bot start time for uptime
 bot.start_time = datetime.now(UTC)
 
-# List of all cog modules to load
+# List of cogs to load
 initial_extensions = [
     'cogs.general',
     'cogs.info',
@@ -43,10 +47,10 @@ initial_extensions = [
     'cogs.slash_moderation',
 ]
 
-# When bot is ready
+# Event: Bot is ready
 @bot.event
 async def on_ready():
-    print(f"✅ {bot.user} is online!")
+    print(f"✅ {bot.user} is online and ready!")
 
     # Sync slash commands
     try:
@@ -55,28 +59,28 @@ async def on_ready():
     except Exception as e:
         print(f"❌ Failed to sync slash commands: {e}")
 
-    # Save bot guilds to file
+    # Save current guilds (server IDs) to JSON
     try:
         guild_ids = [str(g.id) for g in bot.guilds]
         with open("bot_guilds.json", "w") as f:
             json.dump(guild_ids, f)
-        print(f"📁 Saved {len(guild_ids)} bot guilds to bot_guilds.json")
+        print(f"📁 Saved {len(guild_ids)} guild(s) to bot_guilds.json")
     except Exception as e:
-        print(f"❌ Failed to write bot_guilds.json: {e}")
+        print(f"❌ Failed to save guilds: {e}")
 
-# Load cogs
+# Load cogs/extensions
 async def load_extensions():
     for ext in initial_extensions:
         try:
             await bot.load_extension(ext)
             print(f"✅ Loaded extension: {ext}")
         except Exception as e:
-            print(f"❌ Failed to load extension {ext}: {e}")
+            print(f"❌ Failed to load {ext}: {e}")
 
-# Run the bot
+# Main runner
 async def main():
     await load_extensions()
     await bot.start(TOKEN)
 
-# Entry point
+# Run the bot
 asyncio.run(main())
