@@ -9,3 +9,8 @@ requests
 
 # For Replit and production environments
 gunicorn
+
+# For Music Playback
+discord.py[voice]
+PyNaCl
+ffmpeg

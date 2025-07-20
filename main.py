@@ -40,11 +40,13 @@ initial_extensions = [
     'cogs.help',
     'cogs.status',
     'cogs.moderation',
+    'cogs.play',
     # Slash command cogs
     'cogs.slash_general',
     'cogs.slash_info',
     'cogs.slash_help',
     'cogs.slash_moderation',
+    'cogs.slash_play',
 ]
 
 # Event: Bot is ready
